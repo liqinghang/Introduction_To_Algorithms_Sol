@@ -1,0 +1,146 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+% 参考：https://blog.csdn.net/jzwong/article/details/52399112
+\begin{document}
+李青航 SA22225226\\
+\noindent\textbf{2.3-2}\\
+算法见Algorithm 1,其中$A$为数组，$p$为最左游标，$r$为最右游标，$p,q,r$将数组分为区间左半边$[p,q]$,右半边$(q,r]$ .\\
+
+\begin{algorithm}
+    \caption{MERGE$(A,p,q,r)$}
+    \label{alg:1}
+    \begin{algorithmic}[1]
+        \STATE $n_1=q-p+1$
+        \STATE $n_2=r-q$
+		\STATE let $L[1...n_1]$ and $R[1...n_2]$ be two new array
+		\FOR{ $i=1$ to $n_1$}
+			\STATE $L[i]=A[p+i-1]$
+		\ENDFOR
+        \FOR{$j=1$ to $n_2$}
+			\STATE $L[j]=A[q+j]$
+		\ENDFOR
+		\STATE $i=1$
+		\STATE $j=1$
+		\STATE $k=p$
+		\WHILE{$i \ne n_1 +1 $ and $j \ne n_2+1$}
+			\IF{$L[i] \le R[i]$}
+				\STATE $A[k]=L[i]$
+				\STATE $i=i+1$
+			\ELSIF{$A[k]=R[j]$}
+				\STATE $j=j+1$
+			\ENDIF
+			\STATE $k=k+1$
+		\ENDWHILE
+		\IF {$i==n_1+1$}
+			\FOR{$m=j$ to $n_2$}
+				\STATE $A[k]=R[m]$
+				\STATE $k=k+1$
+			\ENDFOR
+		\ENDIF
+		\IF {$j==n_2+1$}
+			\FOR{$m=i$ to $n_1$}
+				\STATE $A[k]=L[m]$
+				\STATE $k=k+1$
+			\ENDFOR
+		\ENDIF 
+    \end{algorithmic}
+\end{algorithm}
+\noindent\textbf{2.3-3}\\
+由指数运算法则$n=\lg 2^n$和条件
+
+\begin{equation}
+%\nonumber
+T(n)= 
+    \begin{cases}
+        2, & \text{if } n==2\\
+        2T(n/2)+n, & \text{if } n=2^k, k>1
+    \end{cases}
+\end{equation}
+\\当$k=1$时，由$(1)$得$T(2)=2$
+\\假设$n=2^k$时，有
+\begin{equation}
+T(2^k)=2T(2^k/2)+2^k
+\end{equation}
+\\则当$n=2^{k+1}$时，根据$(2)$,且把猜测$T(n)=n\lg n$带入有
+
+\begin{equation}
+\nonumber
+\begin{split}
+T(2^{k+1})&=2T(2^{k+1}/2)+2^{k+1}=2T(2^k)+2^{k+1}\\
+&=2(2^k\lg(2^k))+2^{k+1}=k2^{k+1}+2^{k+1}\\&=(k+1)2^{k+1}=2^{k+1}\lg(2^{k+1})=n\lg(n)
+\end{split}
+\end{equation}
+\\
+\textbf{2.3-4}\\
+\begin{equation}
+\nonumber
+T(n)= 
+    \begin{cases}
+        \Theta(1), & \text{if } n\le 1 \\
+        T(n-1)+I(n), & \text{otherwise }
+    \end{cases}
+\end{equation}
+其中，$T(n)$表示对$n$个元素的数组$A$进行插入排序的时间，$I(n)$表示将第$n$个元素插入到已经排好的$A[1...n-1]$的时间。当最坏的情况下，$I(n) \in \Theta(n)$ .
+\\
+\textbf{4.3-1}\\
+根据所证明结论，猜测$T(n)\in O(n^2)$,所以,将$T(n)<n^2$带入：
+$$
+T(n)\le c(n-1)^2+n=cn^2+(1-2c)n+1 \le cn^2-2c+2 \le cn^2
+$$
+根据$O(n^2)$定义，证明成立
+\\
+\textbf{4.3-2}\\
+根据所证结论知道，$T(n)\in O(\lg n)$,存在有$T(n)\le 3\lg (n)-1$，将其带入
+\begin{equation}
+\nonumber
+\begin{split}
+T(n)&=T(\lceil n/2 \rceil)+1\\
+&\le 3\lg (\lceil n/2 \rceil)-1+1\\
+&\le 3\lg(3n/4)\\
+&= 3\lg(n)-3\lg(3/4) \\
+&\le 3\lg(n)-1
+\end{split}
+\end{equation}
+\\
+\noindent\textbf{4.3-3}\\
+假设有$T(n) \ge cn\lg n$\\
+\begin{equation}
+\nonumber
+\begin{split}
+T(n)&\ge 2(c\lfloor n/2 \rfloor \lg(\lfloor n/2 \rfloor))+n \\
+&\ge cn\lg (n/2) +n\\
+&=cn\lg n -cn\lg 2 +n\\
+&=cn\lg n - cn+n\\
+&\ge cn \lg n
+\end{split}
+\end{equation}
+所以有下界，即$T(n)\in \Omega(n\lg n)$\\
+又由题目知已经有上界$T(n) \in O(n\lg n)$,所以$T(n)\in \Theta(n\lg n)$
+\\
+\noindent\textbf{4.4-1}\\
+根据递归树，得出$T(n)\in O(n^{\lg 3})$,将$T(n) \le 2n^{\lg 3}-2n$带入验证：
+\begin{equation}
+\nonumber
+\begin{split}
+T(n)&=3T(\lfloor n/2 \rfloor)+n\\
+&\le 6(\frac{n}{2})^{\lg 3}-n+n\\
+&= c n^{\lg 3}
+\end{split}
+\end{equation}
+所以$T(n) \in O(n^{\lg 3})$
+\\
+\noindent\textbf{4.4-6}\\
+根据书图4-6，每层的时间代价都是$cn$,高度为$\log_3 n$，所以总代价为:\\
+$cn\log_3 n=\frac{c}{\log 3}n\lg n \in \Omega(n\lg n)$\\
+\noindent\textbf{4.5-1}\\
+\textbf{a.} $\Theta(n^{\frac{1}{2}})$ （情况1）\\
+\textbf{b.} $\Theta(\sqrt{n}\lg n)$ （情况2）\\
+\textbf{c.} $\Theta(n)$ （情况3）\\
+\textbf{d.} $\Theta(n^2)$ （情况3）\\
+\noindent\textbf{4.5-3}\\
+套用主方法，其中$a=1, b=2$，所以$\Theta (n^{\log_2 1})=\Theta(1)$,使用情况2，答案为$\Theta(\lg n)$
+\end{document}

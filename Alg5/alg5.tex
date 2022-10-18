@@ -1,0 +1,104 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+% 参考：https://blog.csdn.net/jzwong/article/details/52399112
+\begin{document}
+李青航 SA22225226\\
+
+\noindent\textbf{14.3-2}
+
+\begin{algorithm}
+	\caption {INTERVAL-SEARCH$(T,i)$}
+	\label{alg:1}
+	\begin{algorithmic}[1]
+		\STATE $x=T.root$
+		\WHILE{$x \ne T.nil$ and $i$ does not overlap $x.int$}
+			\IF{$x.left \ne T.nil$ and $x.left.max > i.low$}
+				\STATE $x=x.left$
+			\ELSE
+				\STATE $x=x.right$
+			\ENDIF
+		\ENDWHILE
+		\RETURN $x$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\noindent\textbf{15.1-4}
+
+见算法2，3. 
+数组$s$保存,$s[i]$表示长度为$i$的钢条，从哪里切
+\begin{algorithm}
+	\caption {MEMOIZED-CUT-ROD$(p,n)$}
+	\label{alg:2}
+	\begin{algorithmic}[1]
+		\STATE let $r[0...n]$ be a new array
+		\STATE let $s[0...n]$ be a new array
+		\FOR{$i=0$ to $n$}
+			\STATE $r[i]=-\infty$
+			\STATE $s[i]=0$
+		\ENDFOR
+		\RETURN MEMOIZED-CUT-ROD-AUX$(p,n,r,s)$
+	\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+	\caption {MEMOIZED-CUT-ROD-AUX$(p,n,r,s)$}
+	\label{alg:3}
+	\begin{algorithmic}[1]
+		\IF{$r[n] \ge 0$}
+			\RETURN $r[n]$
+		\ENDIF
+		\IF{$n==0$}
+			\STATE $q=0$
+		\ELSIF{$q=-\infty$}
+			\FOR{$i=1$ to $n$}
+				\STATE $t=p[i]+$MEMOIZED-CUT-ROD-AUX$(p,n-i,r,s).q$
+				\IF{$t\ge q$}
+					\STATE $q=t$
+					\STATE $s[n]=i$
+				\ENDIF
+			\ENDFOR
+		\ENDIF
+		\STATE $r[n]=q$
+		\RETURN $q$ and $s$
+	\end{algorithmic}
+\end{algorithm}
+
+~\\
+\noindent\textbf{15.2-1}
+
+方案 $(A_1A_2)((A_3A_4)(A_5A_6))$
+
+最小代价$ 5 \cdot 50 \cdot 6 + 3 \cdot 12 \cdot 5 + 5 \cdot 10 \cdot 3 + 3 \cdot 5 \cdot 6 + 5 \cdot 3 \cdot 6 =
+1500 + 180 + 150 + 90 + 90 = 2010$
+
+~\\
+\noindent\textbf{15.2-2}\\
+见算法4
+\begin{algorithm}
+	\caption {MATRIX-CHAIN-MULTIPLY$(A,s,i,j)$}
+	\label{alg:4}
+	\begin{algorithmic}[1]
+		\IF{$i==j$}
+			\RETURN $A_i$
+		\ENDIF
+		\RETURN MATRIX-CHAIN-MULTIPLY$(A,s,i,s[i,j])$$\cdot$ MATRIX-CHAIN-MULTIPLY$(A,s,s[i,j]+1,j)$
+	\end{algorithmic}
+\end{algorithm}
+
+\noindent\textbf{15.3-1}
+
+穷举快
+
+穷举法根据组合数学知识，时间复杂度是一个指数复杂度。而RECURSIVE-MATRIX-CHAIN也是一个指数复杂度的，但是还有递归函数调用开销，还会重叠算某些子问题（穷举没有重叠）,重复调用函数。
+
+~\\
+\noindent\textbf{15.3-2}
+
+图太难画，略。归并排序并没有重叠子问题，每次归并，没有重复可用的操作，所以备忘技术没有用
+
+
+\end{document}

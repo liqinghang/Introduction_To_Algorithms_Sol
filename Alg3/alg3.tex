@@ -1,0 +1,66 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+% 参考：https://blog.csdn.net/jzwong/article/details/52399112
+\begin{document}
+李青航 SA22225226\\
+\noindent\textbf{7.1-2}\\
+所有元素都一样的时候, PARTITION返回$r$
+\begin{algorithm}
+	\caption {PARTITION$(A,p,r)$}
+	\label{alg:1}
+	\begin{algorithmic}[1]
+		\STATE $x=A[r]$
+		\STATE $i=p-1$
+		\FOR{$j=p$ to $r-1$}
+			\IF {$A[j]\le x$ and $j \mod 2 == (p+1) \mod 2$ }
+				\STATE $i=i+1$
+				\STATE exchange $A[i]$ with $A[j]$
+			\ENDIF
+		\ENDFOR
+		\STATE exchange $A[i+1]$ with $A[r]$
+		\RETURN $i+1$
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\noindent\textbf{7.2-1}\\
+假设$T(n)=\Theta(n^2)$,带入$T(n)=T(n-1)+\Theta(n)$, 有：\\
+$T(n)=c^2(n-1)^2+cn=(cn)^2+(c-2)n+1=\Theta(n^2)$
+得证\\
+
+\noindent\textbf{7.2-2}\\
+此时是最坏情况，每次划分，左右划分最不平衡，时间复杂度$\Theta(n^2)$\\
+
+\noindent\textbf{7.4-1}\\
+将假设 $T(n)\ge cn^2$带入
+\begin{equation}
+\nonumber
+\begin{split}
+T(n)&=\max_{0\le q \le n-1}(T(q)+T(n-q-1))+\Theta(n)\\
+&\ge \max_{0\le q \le n-1}(cq^2+c(n-q-1)^2)+\Theta(n)\\
+&=c\cdot \max_{0\le q \le n-1}(q^2+(n-q-1)^2)+\Theta(n)\\
+&\ge c\cdot n^2\\
+\end{split}
+\end{equation}
+所以$T(n)=\Omega(n^2)$\\
+
+\noindent\textbf{7.4-4}\\
+
+\begin{equation}
+\nonumber
+\begin{split}
+E[X]&=\sum^{n-1}_{i=1} \sum^{n}_{j=i+1} \frac{2}{j-i+1}\\
+&=\sum^{n-1}_{i=1}\sum^{n-i}_{k=1} \frac{2}{k+1}\\
+&\ge \sum^{n-1}_{i=1} 2\ln(n-i+1)\\
+&=2\ln(\prod^{n-1}_{i=1}n-i+1)\\
+&=2\ln(n!)\\
+&=\frac{2}{\lg e}\lg(n!)\\
+&\ge cn\lg n
+\end{split}
+\end{equation}
+所以期望运行时间是 $T(n)=\Omega(n\lg n)$
+\end{document}
