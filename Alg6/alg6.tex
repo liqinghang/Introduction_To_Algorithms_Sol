@@ -1,0 +1,96 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+% 参考：https://blog.csdn.net/jzwong/article/details/52399112
+\begin{document}
+李青航 SA22225226\\
+
+\noindent\textbf{15.2-1}
+
+方案 $(A_1A_2)((A_3A_4)(A_5A_6))$
+
+最小代价$ 5 \cdot 50 \cdot 6 + 3 \cdot 12 \cdot 5 + 5 \cdot 10 \cdot 3 + 3 \cdot 5 \cdot 6 + 5 \cdot 3 \cdot 6 =
+1500 + 180 + 150 + 90 + 90 = 2010$
+
+~\\
+\noindent\textbf{15.2-2}\\
+见算法1
+\begin{algorithm}
+	\caption {MATRIX-CHAIN-MULTIPLY$(A,s,i,j)$}
+	\label{alg:1}
+	\begin{algorithmic}[1]
+		\IF{$i==j$}
+			\RETURN $A_i$
+		\ENDIF
+		\RETURN MATRIX-CHAIN-MULTIPLY$(A,s,i,s[i,j])$$\cdot$ MATRIX-CHAIN-MULTIPLY$(A,s,s[i,j]+1,j)$
+	\end{algorithmic}
+\end{algorithm}
+
+\noindent\textbf{15.3-1}
+
+穷举快
+
+穷举法根据组合数学知识，时间复杂度是一个指数复杂度。而RECURSIVE-MATRIX-CHAIN也是一个指数复杂度的，但是还有递归函数调用开销，还会重叠算某些子问题（穷举没有重叠）,重复调用函数。
+
+~\\
+\noindent\textbf{15.3-2}
+
+图太难画，略。归并排序并没有重叠子问题，每次归并，没有重复可用的操作，所以备忘技术没有用
+
+~\\
+\noindent\textbf{15.4-3}
+
+见算法2，3
+
+其中数组$b,c$是引用传递，可以被函数内部改变。
+
+\begin{algorithm}
+    \caption[]{MEMO-LCS-LENGTH-AUX$(X,Y,c,b)$}
+    \label{alg:2}
+    \begin{algorithmic}[1]
+        \STATE m=$|X|$
+        \STATE n=$|Y|$
+        \IF{ $c[m,n]!=0$ or $m==0$ or $n==0$}
+            \RETURN $c[m,n]$
+        \ENDIF
+        \IF{$x_m==y_n$}
+            \STATE $b[m,n]=\nwarrow$
+            \STATE $c[m,n]=$MEMO-LCS-LENGTH-AUX$(X[1\dots m-1],Y[1\dots n-1],c,b)$$+1$
+        \ELSIF{MEMO-LCS-LENGTH-AUX$(X[1\dots m-1],Y,c,b)$$\ge$MEMO-LCS-LENGTH-AUX$(X,Y[1\dots n-1],c,b)$}
+            \STATE $b[m,n]=\uparrow$
+            \STATE $c[m,n]=$MEMO-LCS-LENGTH-AUX$(X[1\dots m-1],Y,c,b)$
+        \ELSE 
+            \STATE $b[m,n]=\leftarrow$
+            \STATE $c[m,n]=$MEMO-LCS-LENGTH-AUX$(X,Y[1\dots n-1],c,b)$
+        \ENDIF
+        \RETURN $c[m,n]$
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+    \caption[]{MEMO-LCS-LENGTH$(X,Y)$}
+    \label{alg:3}
+    \begin{algorithmic}[1]
+        \STATE let $b[1\dots m,1\dots n]$ and $c[1\dots m,1\dots n]$be new table
+        \FOR{$i=1$ to $m$} 
+            \STATE $c[i,0]=0$
+        \ENDFOR
+        \FOR{$i=1$ to $n$}
+            \STATE $c[0,i]=0$
+        \ENDFOR
+        \STATE MEMO-LCS-LENGTH-AUX$(X,Y,c,b)$//$b$ and $c$,passed by reference
+        \RETURN $b$ and $c$
+    \end{algorithmic}
+\end{algorithm}
+
+~\\
+\noindent\textbf{15.5-3}
+
+在每次计算$e[i,j]$时都重新计算了$\omega(i,j)$，每次多出$\Theta(j-i)$次加法。
+
+每次多出$O(n)$规模，总的时间复杂度增加到$O(n^3)$
+
+\end{document}
