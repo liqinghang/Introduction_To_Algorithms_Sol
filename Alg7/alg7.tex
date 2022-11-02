@@ -1,0 +1,89 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{color}
+
+\geometry{a4paper,scale=0.7}
+
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+% 参考：https://blog.csdn.net/jzwong/article/details/52399112
+\begin{document}
+
+李青航 SA22225226
+
+\noindent\textbf{16.1-2 }
+
+\begin{algorithm}
+	\caption {GREEDY-ACTIVITY-SELECTOR$(s,f)$}
+	\begin{algorithmic}[1]
+		\STATE $n=s.length$
+        \STATE $A=\{a_n\}$
+        \STATE $k=n$
+        \FOR{$m=n-1$ to $1$}
+            \IF{$f[m]<=s[k]$}
+                \STATE $A=A\bigcup \{a_m\}$
+                \STATE $k=m$
+            \ENDIF
+        \ENDFOR
+        \RETURN $A$
+	\end{algorithmic}
+\end{algorithm}
+
+令$A_k$是$S_k$的一个最大兼容活动子集，且$a_j$是$A_k$中开始时间最晚的活动
+若$a_j=a_m$，则已经证明$a_m$在$S_k$的某个最大兼容活动子集中。若$a_j\neq a_m$，令
+集合$A_k' = A_k-\{a_j\}\cup \{a_m\}$，即将$A_k$
+中 的$a_j$替换为$a_m$。$A_k'$中的活动都是不相交的，因为$A_k$
+中的活动都是不相交的，$a_j$是$A_k$中开始时间最晚的活动，
+而$s_j\le s_m$。由于$|A_k ' |=|A_k|$，因此得出结论$A_k'$也是
+$S_k$的一个最大兼容活动子集，且他包含$a_m$，所以贪心总是安全的。
+
+所以可以选择一个活动放入最优解，然后对剩余子问题继续求解。
+
+~\\
+\noindent\textbf{16.2-2 }\\
+见算法2
+
+状态变量：$K[i][j]$表示前$i$件物品放入容量为$j$的背包的最大价值
+
+当前容量为$j$，我们要考虑第$i$件物品能否放入？是否放入？
+
+1.如果当前背包容量$j<v[i]$,不能放入，则$K[i][j]=K[i-1][j]$
+
+2.如果当前背包容量$j>=v[i]$，能放入但是要比较代价
+
+~~~~2.1 如果第$i$件物品不放入背包，则$K[i][j]=K[i-1][j]$
+
+~~~~2.2 如果第$i$件物品放入背包，则$K[i][j]=K[i-1][j-v[i]]+w[i]$
+
+对于01背包来说边界就是f[i][j]=0,即当i=0或者j=0时f[i][j]的值为0。
+
+$i=0$时，表示背包没有放入一个物品，那么此时背包的最大价值无从谈起，所以为0；
+$j=0$时，表示背包的容量为0，那么此时无法放入物品，所以最大价值也为0；
+
+\begin{algorithm}
+    \caption {0-1 Knapsack$(n,W)$}
+    \begin{algorithmic}
+        \STATE Initialize a new table $K[n+1,W+1]$
+        \FOR {$j=1$ to $W$}
+            \STATE $K[0,j]=0$
+        \ENDFOR
+        \FOR{$i=1$ to $n$}
+            \STATE $K[i,0]=0$
+        \ENDFOR
+        \FOR{$i=1$ to $n$}
+            \FOR{$j=1$ to $W$}
+                \IF{$j<i.weight$}
+                    \STATE $K[i,j]=K[i-1,j]$
+                \ENDIF
+                \STATE $K[i,j]=$max$(K[i-1,j],K[i-1,j-i.weight]+i.value)$
+            \ENDFOR
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}
+
+\end{document}
