@@ -1,0 +1,85 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{color}
+
+\geometry{a4paper,scale=0.7}
+
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+
+\begin{document}
+    李青航 SA22225226
+
+    \noindent\textbf{17.4-2}
+
+    当删除后，如果$\alpha _i\ge 1/2$
+    \begin{equation*}
+        \begin{aligned}
+            \hat{c_i}&=c_i+\Phi _i -\Phi _{i-1}\\
+            &=1+(2num_i-size_i)-(2num_{i-1}-size_{i-1})\\
+            &=1+2num_i-size_i-(2num_i+2-size_i)\\
+            &=-1
+        \end{aligned}
+    \end{equation*}
+
+    当删除后，如果$\alpha _i <1/2$ 
+    \begin{equation*}
+        \begin{aligned}
+            \hat{c_i}&=c_i+\Phi _i -\Phi _{i-1}\\
+            &=1+(\frac{1}{2}size_i-num_i)-(2num_{i-1}-size_{i-1})\\
+            &=1+(\frac{1}{2}size_i-num_i)-(2num_i+2-size_i)\\
+            &=-1+\frac{3}{2}size_i-3num_i
+        \end{aligned}
+    \end{equation*}
+
+    因为$\alpha _i=num_i/size_i<1/2$
+
+    \begin{equation*}
+        \begin{aligned}
+            \hat{c_i}&=-1+\frac{3}{2}size_i-3num_i\\
+            &\le 1
+        \end{aligned}
+    \end{equation*}
+
+    所以摊还代价 的上界是一个常数
+
+
+    ~\\
+    \noindent\textbf{17.4-3}
+
+    首先，显然势函数$\Phi(T)>0$
+
+    当删除后，如果$\alpha _i \ge 1/3$
+    \begin{equation*}
+        \begin{aligned}
+            \hat{c_i}&=c_i+\Phi _i -\Phi _{i-1}\\
+            &=1+|2num_i-size_i|-|2num_{i-1}-size_{i-1}|\\
+            &=1+|2num_i-size_i|-|2num_i+2-size_i|\\
+            &\le 1+|2num_i-size_i|-|2num_i-size_i|+2\\
+            &=3
+        \end{aligned}
+    \end{equation*}
+
+    当删除后，如果$\alpha _i < 1/3$ ，收缩
+
+    此时有$num_i=num_{i-1}-1,~~size_{i}=\frac{2}{3}size_{i-1},~~2num_i=size_i$
+
+    \begin{equation*}
+        \begin{aligned}
+            \hat{c_i}&=c_i+\Phi _i -\Phi _{i-1}\\
+            &=num_i+1+|2num_i-size_i|-|2num_{i-1}-size_{i-1}|\\
+            &=num_i+1+|2num_i-size_i|-|2num_i +2 -\frac{3}{2}size_i|\\
+            &\le num_i+1+|2num_i-size_i|-|2num_i -\frac{3}{2}size_i|+2\\
+            &=num_i+1-|size_i-\frac{3}{2}size_i|+2\\
+            &=3+num_i-\frac{1}{2}size_i\\
+            &=3
+        \end{aligned}
+    \end{equation*}
+
+    所以摊还代价的上界是常数
+\end{document}

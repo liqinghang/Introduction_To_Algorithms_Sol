@@ -1,0 +1,63 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{color}
+
+\geometry{a4paper,scale=0.7}
+
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+
+\begin{document}
+    李青航 SA22225226
+
+    \noindent\textbf{16.4-1 }
+
+    根据拟阵性质定义
+
+    1.$S$是一个有限集（已知条件）
+
+    2.假设$k\ge 0$,就是$\mathcal{I}_k$是非空的
+    为了证明遗传性，认为$A \in \mathcal{I}_k$，
+    这就是说$|A|\le k$,然后如果$B\subseteq A$,
+    这意味着$|B|\le |A|\le k$，所以$B\in \mathcal{I}_k$
+
+    3.证明交换性质。让$A,B\in \mathcal{I}_k$，$|A|<|B|$
+    然后选取一个任意元素 $x\in B\\A$，然后有
+    $|A\cup\{x\}|=|A|+1\le |B|\le k$，
+    所以我们能使$A\cup \{x\}\in \mathcal{I}_k$
+
+    ~\\
+    \noindent\textbf{16.5-1}
+
+    
+\begin{table}[h]
+    \centering
+    \begin{tabular}{cccccccc} 
+    \toprule
+    $a_i$ & 1  & 2  & 3  & 4  & 5  & 6  & 7   \\
+    $d_i$ & 4  & 2  & 4  & 3  & 1  & 4  & 6   \\
+    $w_i$ & 10 & 20 & 30 & 40 & 50 & 60 & 70  \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+
+    我们从贪婪地构造矩阵阵开始，
+    首先添加成本最高的未完成任务。我们添加任务7 6 5 4 3。
+    然后，为了安排任务1或2，我们需要留下未完成的更重要的任
+    务。所以我们的调度是$<5 3 4 6 7 1 2>$
+    总惩罚只有$w_1+w_2 = 30$
+
+    ~\\
+    \noindent\textbf{16.5-2}
+
+    创建长度为$n$的数组$B$，初始化全为0。
+    对于每个元素$a\in A$，在$B[a.deadline]$上加1。
+    如果$B[a.deadline] > a.deadline$，返回集合不是独立的。
+    否则,继续。如果成功检查了$A$的每个元素，返回集合是独立的。
+
+\end{document}

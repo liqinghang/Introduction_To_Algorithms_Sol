@@ -1,0 +1,83 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{color}
+
+\geometry{a4paper,scale=0.7}
+
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Output:}} %UseOutput in the format of Algorithm
+
+\begin{document}
+    
+SA22225226 李青航
+
+\noindent\textbf{17.1-1}
+
+不是。最极端的，当我们有连续的操作序列，
+只含有MULTIPOP$(S,k)$,\\MULTIPUSH$(S,k)$
+显然每次的摊还代价是$O(k)$
+
+~\\
+\noindent\textbf{17.1-2}
+
+考虑一个极端情况，二进制是$1000...000$(有$k-1$个0)，进行一个DECREMENT减一操作，翻转了
+$k$~位数，再INCREMENT加一操作，又翻转了$k$~位数，连续做$n$~次这样极端操作，
+时间复杂度$O(nk)$
+
+~\\
+\noindent\textbf{17.2-1}
+
+赋予摊还代价:~PUSH~2,~POP~1,~COPY~0
+
+每次PUSH操作，为自己缴费1元，为后面复制这个元素预先缴费1元，
+因为栈最多有$k$个元素，至少都有$k$元的信用预存款够复制。
+所以每次摊还代价都是常数。$n$次操作，时间复杂度$O(n)$
+
+~\\
+\noindent\textbf{17.3-1}
+
+
+设$\Phi '(D_n)=\Phi (D_n)-\Phi (D_0)$
+
+因为$\Phi (D_i)\ge \Phi (D_0)$且$\Phi (D_0) \ne 0$,
+
+所以有$\Phi '(D_n)=\Phi (D_n)-\Phi (D_0)\ge \Phi (D_0)-\Phi (D_0)=0$
+
+又
+\begin{equation*}
+    \begin{aligned}
+        \sum_{i=1}^{n}\hat{c_i} 
+        &=\sum_{i=1}^{n}c_i+\Phi '(D_n)-\Phi ' (D_0)\\
+        &=\sum_{i=1}^{n}c_i+(\Phi (D_n)-\Phi  (D_0))-(\Phi (D_0)-\Phi  (D_0))\\
+        &=\sum_{i=1}^{n}c_i+\Phi (D_n)-\Phi  (D_0)
+    \end{aligned}
+\end{equation*}
+
+所以摊还代价相同
+
+~\\
+\noindent\textbf{17.3-3}
+
+设势函数为$n\lg (n)$，$n$是最小堆的大小，最坏情况下操作的时间均为$O(\lg n)$
+
+INSERT摊还代价是$O(\lg n)$，因为插入一次，摊还$\lg n$使得堆的大小增加1
+
+但是抽取最小元素的摊还代价是$O(1)$,因为实际上的势函数的代价已经算过了，所以是常数级别
+
+
+
+~\\
+\noindent\textbf{17.3-4}
+
+因为$\Phi (D_n)=s_n,~\Phi (D_0)=s _0$,并且初始有$n$个对象的栈的摊还代价是$O(n)$
+
+由式子 17.3 得知，总代价是$O(n) + s_n - s_0$
+
+
+
+\end{document}
